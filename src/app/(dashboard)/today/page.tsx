@@ -34,7 +34,15 @@ export default async function TodayPage() {
       </div>
 
       <section>
-        <h2 className="mb-3 text-lg font-medium text-slate-900">오늘 예약</h2>
+        <div className="mb-3 flex items-center justify-between gap-2">
+          <h2 className="text-lg font-medium text-slate-900">오늘 예약</h2>
+          <Link
+            href="/appointments"
+            className="rounded-md border border-slate-300 px-3 py-1.5 text-xs text-slate-700 hover:bg-slate-50"
+          >
+            전체 예약 캘린더 보기
+          </Link>
+        </div>
         <ul className="divide-y divide-slate-200 rounded-lg border border-slate-200 bg-white">
           {(appointments ?? []).length === 0 ? (
             <li className="px-4 py-6 text-sm text-slate-500">예약이 없습니다.</li>

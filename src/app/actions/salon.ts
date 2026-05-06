@@ -77,9 +77,16 @@ export async function createPrepaidProduct(formData: FormData): Promise<void> {
   const name = String(formData.get("name") ?? "").trim();
   const pay = Number(formData.get("pay_amount"));
   const credit = Number(formData.get("credit_amount"));
+
+  const isValidPrepaidAmount = (value: number) =>
+    Number.isFinite(value) &&
+    Number.isInteger(value) &&
+    value >= 10000 &&
+    value % 10000 === 0;
+
   if (!name) return;
-  if (!Number.isFinite(pay) || pay <= 0) return;
-  if (!Number.isFinite(credit) || credit <= 0) return;
+  if (!isValidPrepaidAmount(pay)) return;
+  if (!isValidPrepaidAmount(credit)) return;
 
   const { error } = await supabase.from("prepaid_products").insert({
     name,

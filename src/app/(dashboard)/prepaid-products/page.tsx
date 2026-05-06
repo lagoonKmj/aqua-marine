@@ -38,7 +38,7 @@ export default async function PrepaidProductsPage() {
             <input
               name="pay_amount"
               type="number"
-              min={1}
+              min={10000}
               step={10000}
               required
               className="w-full rounded-md border border-slate-300 px-3 py-2"
@@ -49,7 +49,7 @@ export default async function PrepaidProductsPage() {
             <input
               name="credit_amount"
               type="number"
-              min={1}
+              min={10000}
               step={10000}
               required
               className="w-full rounded-md border border-slate-300 px-3 py-2"
@@ -64,6 +64,9 @@ export default async function PrepaidProductsPage() {
             </button>
           </div>
         </form>
+        <p className="mt-2 text-xs text-slate-500">
+          금액은 1만원 단위만 입력할 수 있습니다. (예: 200000)
+        </p>
       </section>
 
       <section>
