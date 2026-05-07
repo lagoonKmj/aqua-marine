@@ -1,12 +1,10 @@
 "use client";
 
 import { createClient } from "@/lib/supabase/client";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { crmUi } from "@/lib/crmUi";
 
 export function LoginForm() {
-  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -26,8 +24,9 @@ export function LoginForm() {
       setError(signError.message);
       return;
     }
-    router.refresh();
-    router.push("/today");
+    // 배포 환경에서 클라이언트 세션 쿠키가 서버/미들웨어에 반영되기 전에
+    // client router 전환만 하면 /today에서 다시 /login으로 튕길 수 있음 → 전체 이동으로 동기화
+    window.location.assign("/today");
   }
 
   return (
