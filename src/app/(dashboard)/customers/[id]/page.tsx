@@ -5,6 +5,7 @@ import { updateCustomer } from "@/app/actions/salon";
 import { formatKrw } from "@/lib/money";
 import { WalletTopupForm } from "@/components/WalletTopupForm";
 import { StartVisitForm } from "@/components/StartVisitForm";
+import { crmUi } from "@/lib/crmUi";
 
 export default async function CustomerDetailPage({
   params,
@@ -36,72 +37,64 @@ export default async function CustomerDetailPage({
     .limit(30);
 
   return (
-    <div className="space-y-8">
-      <div className="flex flex-wrap items-center justify-between gap-3">
+    <div className={crmUi.pageWrap}>
+      <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-semibold text-slate-900">{customer.name}</h1>
-          <p className="text-sm text-slate-600">
+          <h1 className={crmUi.pageTitle}>{customer.name}</h1>
+          <p className="mt-1 text-sm text-neutral-600">
             지갑 잔액{" "}
-            <span className="font-medium text-slate-900">
-              {formatKrw(customer.wallet_balance)}
-            </span>
+            <span className="font-semibold text-brand-600">{formatKrw(customer.wallet_balance)}</span>
           </p>
         </div>
         <div className="flex flex-wrap gap-2">
           <StartVisitForm customerId={id} />
-          <Link
-            href="/customers"
-            className="rounded-md border border-slate-300 px-3 py-2 text-sm hover:bg-slate-50"
-          >
+          <Link href="/customers" className={crmUi.btnSecondary}>
             목록
           </Link>
         </div>
       </div>
 
       <div className="grid gap-6 lg:grid-cols-2">
-        <section className="rounded-lg border border-slate-200 bg-white p-4">
-          <h2 className="mb-3 font-medium text-slate-900">프로필</h2>
-          <form action={updateCustomer} className="space-y-3">
+        <section className={crmUi.surfacePad}>
+          <h2 className={`mb-4 ${crmUi.sectionTitle}`}>프로필</h2>
+          <form action={updateCustomer} className="space-y-4">
             <input type="hidden" name="customer_id" value={id} />
             <div>
-              <label className="mb-1 block text-sm text-slate-600">이름</label>
+              <label className={crmUi.label}>이름</label>
               <input
                 name="name"
                 required
                 defaultValue={customer.name}
-                className="w-full rounded-md border border-slate-300 px-3 py-2"
+                className={crmUi.input}
               />
             </div>
             <div>
-              <label className="mb-1 block text-sm text-slate-600">전화</label>
+              <label className={crmUi.label}>전화</label>
               <input
                 name="phone"
                 defaultValue={customer.phone ?? ""}
-                className="w-full rounded-md border border-slate-300 px-3 py-2"
+                className={crmUi.input}
               />
             </div>
             <div>
-              <label className="mb-1 block text-sm text-slate-600">생일</label>
+              <label className={crmUi.label}>생일</label>
               <input
                 name="birthday"
                 type="date"
                 defaultValue={customer.birthday ?? ""}
-                className="w-full rounded-md border border-slate-300 px-3 py-2"
+                className={crmUi.input}
               />
             </div>
             <div>
-              <label className="mb-1 block text-sm text-slate-600">메모</label>
+              <label className={crmUi.label}>메모</label>
               <textarea
                 name="notes"
                 rows={4}
                 defaultValue={customer.notes ?? ""}
-                className="w-full rounded-md border border-slate-300 px-3 py-2"
+                className={`${crmUi.input} min-h-[120px] resize-y`}
               />
             </div>
-            <button
-              type="submit"
-              className="rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-800"
-            >
+            <button type="submit" className={crmUi.btnPrimary}>
               저장
             </button>
           </form>
@@ -111,23 +104,23 @@ export default async function CustomerDetailPage({
       </div>
 
       <section>
-        <h2 className="mb-3 font-medium text-slate-900">최근 방문</h2>
-        <ul className="divide-y divide-slate-200 rounded-lg border border-slate-200 bg-white">
+        <h2 className={`mb-3 ${crmUi.sectionTitle}`}>최근 방문</h2>
+        <ul className={`${crmUi.listWrap} divide-y divide-neutral-100`}>
           {(visits ?? []).length === 0 ? (
-            <li className="px-4 py-6 text-sm text-slate-500">방문 기록이 없습니다.</li>
+            <li className={crmUi.listEmpty}>방문 기록이 없습니다.</li>
           ) : (
             (visits ?? []).map((v) => (
-              <li key={v.id} className="flex items-center justify-between px-4 py-3">
+              <li
+                key={v.id}
+                className={`${crmUi.listRow} items-center justify-between sm:flex-row`}
+              >
                 <div>
-                  <p className="text-sm text-slate-600">
+                  <p className="text-sm font-medium text-neutral-800">
                     {new Date(v.visited_at).toLocaleString("ko-KR")}
                   </p>
-                  <p className="text-xs text-slate-400">{v.status}</p>
+                  <span className={crmUi.badgeMuted}>{v.status}</span>
                 </div>
-                <Link
-                  href={`/visits/${v.id}`}
-                  className="text-sm font-medium text-slate-900 underline"
-                >
+                <Link href={`/visits/${v.id}`} className={crmUi.btnPrimarySm}>
                   열기
                 </Link>
               </li>

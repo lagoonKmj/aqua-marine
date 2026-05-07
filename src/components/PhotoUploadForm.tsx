@@ -2,6 +2,7 @@
 
 import { useActionState } from "react";
 import { registerTreatmentPhotoForm } from "@/app/actions/salon";
+import { crmUi } from "@/lib/crmUi";
 
 export function PhotoUploadForm({
   treatmentLineId,
@@ -19,8 +20,8 @@ export function PhotoUploadForm({
       <input type="hidden" name="treatment_line_id" value={treatmentLineId} />
       <input type="hidden" name="visit_id" value={visitId} />
       <input type="hidden" name="customer_id" value={customerId} />
-      <label className="text-sm text-slate-600">
-        <span className="mb-1 block">사진</span>
+      <label className="text-xs font-medium text-neutral-500">
+        <span className="mb-1.5 block">사진</span>
         <input
           type="file"
           name="file"
@@ -32,7 +33,7 @@ export function PhotoUploadForm({
       <button
         type="submit"
         disabled={pending}
-        className="rounded-md border border-slate-300 px-3 py-2 text-sm hover:bg-slate-50 disabled:opacity-50"
+        className={`${crmUi.btnSecondarySm} disabled:opacity-50`}
       >
         {pending ? "업로드…" : "업로드"}
       </button>

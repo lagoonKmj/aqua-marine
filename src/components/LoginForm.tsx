@@ -3,6 +3,7 @@
 import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { crmUi } from "@/lib/crmUi";
 
 export function LoginForm() {
   const router = useRouter();
@@ -30,31 +31,27 @@ export function LoginForm() {
   }
 
   return (
-    <form onSubmit={onSubmit} className="flex w-full max-w-sm flex-col gap-4">
+    <form onSubmit={onSubmit} className="flex w-full flex-col gap-5">
       <div>
-        <label className="mb-1 block text-sm font-medium text-slate-700">
-          이메일
-        </label>
+        <label className={crmUi.label}>이메일</label>
         <input
           type="email"
           autoComplete="email"
           required
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="w-full rounded-md border border-slate-300 px-3 py-2 text-slate-900"
+          className={crmUi.input}
         />
       </div>
       <div>
-        <label className="mb-1 block text-sm font-medium text-slate-700">
-          비밀번호
-        </label>
+        <label className={crmUi.label}>비밀번호</label>
         <input
           type="password"
           autoComplete="current-password"
           required
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="w-full rounded-md border border-slate-300 px-3 py-2 text-slate-900"
+          className={crmUi.input}
         />
       </div>
       {error ? (
@@ -65,7 +62,7 @@ export function LoginForm() {
       <button
         type="submit"
         disabled={loading}
-        className="rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-800 disabled:opacity-60"
+        className={`${crmUi.btnPrimary} w-full py-3 text-base`}
       >
         {loading ? "로그인 중…" : "로그인"}
       </button>

@@ -2,6 +2,7 @@
 
 import { useActionState } from "react";
 import { startVisitFromForm } from "@/app/actions/salon";
+import { crmUi } from "@/lib/crmUi";
 
 export function StartVisitForm({
   customerId,
@@ -23,7 +24,7 @@ export function StartVisitForm({
       <button
         type="submit"
         disabled={pending}
-        className="rounded-md bg-slate-900 px-3 py-2 text-sm font-medium text-white hover:bg-slate-800 disabled:opacity-50"
+        className={`${crmUi.btnPrimary} disabled:opacity-50`}
       >
         {pending ? "처리 중…" : label}
       </button>

@@ -2,25 +2,26 @@
 
 import { useActionState } from "react";
 import { addTreatmentLineForm } from "@/app/actions/salon";
+import { crmUi } from "@/lib/crmUi";
 
 export function AddTreatmentLineForm({ visitId }: { visitId: string }) {
   const [state, action, pending] = useActionState(addTreatmentLineForm, null);
 
   return (
-    <form action={action} className="space-y-3 rounded-lg border border-slate-200 p-4">
-      <h3 className="font-medium text-slate-900">시술 추가</h3>
+    <form action={action} className={`space-y-4 ${crmUi.surfacePad}`}>
+      <h3 className={crmUi.sectionTitle}>시술 추가</h3>
       <input type="hidden" name="visit_id" value={visitId} />
       <div>
-        <label className="mb-1 block text-sm text-slate-600">시술 내용</label>
+        <label className={crmUi.label}>시술 내용</label>
         <input
           name="description"
           required
           placeholder="예: 두피 케어"
-          className="w-full rounded-md border border-slate-300 px-3 py-2 text-slate-900"
+          className={crmUi.input}
         />
       </div>
       <div>
-        <label className="mb-1 block text-sm text-slate-600">금액 (원)</label>
+        <label className={crmUi.label}>금액 (원)</label>
         <input
           name="amount"
           type="number"
@@ -28,15 +29,15 @@ export function AddTreatmentLineForm({ visitId }: { visitId: string }) {
           step={1000}
           required
           defaultValue={0}
-          className="w-full rounded-md border border-slate-300 px-3 py-2 text-slate-900"
+          className={crmUi.input}
         />
       </div>
       <div>
-        <label className="mb-1 block text-sm text-slate-600">결제 수단 (한 가지)</label>
+        <label className={crmUi.label}>결제 수단 (한 가지)</label>
         <select
           name="payment_method"
           required
-          className="w-full rounded-md border border-slate-300 px-3 py-2 text-slate-900"
+          className={`${crmUi.input} appearance-none`}
           defaultValue="card"
         >
           <option value="wallet">선불 지갑</option>
@@ -54,7 +55,7 @@ export function AddTreatmentLineForm({ visitId }: { visitId: string }) {
       <button
         type="submit"
         disabled={pending}
-        className="w-full rounded-md bg-slate-900 py-2 text-sm font-medium text-white hover:bg-slate-800 disabled:opacity-50"
+        className={`w-full ${crmUi.btnPrimary}`}
       >
         {pending ? "저장 중…" : "시술 저장"}
       </button>

@@ -3,6 +3,7 @@
 import { useActionState } from "react";
 import { walletTopupForm } from "@/app/actions/salon";
 import { formatKrw } from "@/lib/money";
+import { crmUi } from "@/lib/crmUi";
 
 type Product = {
   id: string;
@@ -21,15 +22,15 @@ export function WalletTopupForm({
   const [state, action, pending] = useActionState(walletTopupForm, null);
 
   return (
-    <form action={action} className="space-y-3 rounded-lg border border-slate-200 p-4">
-      <h3 className="font-medium text-slate-900">선불 충전</h3>
+    <form action={action} className={`space-y-4 ${crmUi.surfacePad}`}>
+      <h3 className={crmUi.sectionTitle}>선불 충전</h3>
       <input type="hidden" name="customer_id" value={customerId} />
       <div>
-        <label className="mb-1 block text-sm text-slate-600">상품</label>
+        <label className={crmUi.label}>상품</label>
         <select
           name="product_id"
           required
-          className="w-full rounded-md border border-slate-300 px-3 py-2 text-slate-900"
+          className={`${crmUi.input} appearance-none`}
           defaultValue=""
         >
           <option value="" disabled>
@@ -44,11 +45,11 @@ export function WalletTopupForm({
         </select>
       </div>
       <div>
-        <label className="mb-1 block text-sm text-slate-600">실제 입금 수단</label>
+        <label className={crmUi.label}>실제 입금 수단</label>
         <select
           name="income_method"
           required
-          className="w-full rounded-md border border-slate-300 px-3 py-2 text-slate-900"
+          className={`${crmUi.input} appearance-none`}
           defaultValue="card"
         >
           <option value="card">카드</option>
@@ -65,7 +66,7 @@ export function WalletTopupForm({
       <button
         type="submit"
         disabled={pending || products.length === 0}
-        className="w-full rounded-md bg-slate-900 py-2 text-sm font-medium text-white hover:bg-slate-800 disabled:opacity-50"
+        className={`w-full ${crmUi.btnPrimary}`}
       >
         {pending ? "처리 중…" : "충전 반영"}
       </button>
